@@ -1,0 +1,29 @@
+{
+  "name": "derproxy",
+  "version": "0.1.0",
+  "description": "Deliberately broken proxy",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/postageapp/derproxy.git"
+  },
+  "keywords": [
+    "proxy"
+  ],
+  "author": "Scott Tadman <tadman@postageapp.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/postageapp/derproxy/issues"
+  },
+  "homepage": "https://github.com/postageapp/derproxy#readme",
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "mocha": "^3.0.2"
+  },
+  "dependencies": {
+    "commander": "^2.9.0"
+  }
+}

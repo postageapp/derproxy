@@ -1,0 +1,49 @@
+#!/usr/bin/env node
+
+const derproxy = require('../lib/derproxy');
+const Server = require('../lib/server');
+
+var program = require('commander')
+  .option('-l --listen [listen]', 'Listen on port')
+  .option('-b --backlog [backlog]', 'Listen backlog', 5)
+  .option('-h --host [host]', 'Connect to host', 'localhost')
+  .option('-p --port [port]', 'Connect to port')
+  .option('-k --kill', 'Kill connections')
+  .option('-r --refuse', 'Refuse connections')
+  .version(derproxy.version)
+  .parse(process.argv);
+
+var server = new Server(program);
+
+server.on('listening', (port) => {
+  console.log('Derproxy listening on port ' + port);
+});
+
+server.on('chaos_close', (delay) => {
+  console.log('Derproxy closing temporarily for ' + delay + 'ms');
+})
+
+server.on('connect', (conn) => {
+  console.log('Connection received from ' + conn.remoteAddress + ':' + conn.remotePort);
+});
+
+server.on('close', (conn) => {
+  console.log('Lost connection from ' + conn.remoteAddress + ':' + conn.remotePort);
+});
+
+server.on('piped', (conn, proxy) => {
+  console.log(
+    'Established connection for ' + conn.remoteAddress + ':' + conn.remotePort + ' to '
+    + proxy.remoteAddress + ':' + proxy.remotePort
+  )
+});
+
+server.on('killed', (conn) => {
+  console.log('Randomly killed connection from ' + conn.remoteAddress + ':' + conn.remotePort);
+})
+
+server.on('error', (err) => {
+  console.log('Error: ' + err);
+})
+
+server.start();
