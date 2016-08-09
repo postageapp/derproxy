@@ -24,22 +24,21 @@ server.on('chaos_close', (delay) => {
 })
 
 server.on('connect', (conn) => {
-  console.log('Connection received from ' + conn.remoteAddress + ':' + conn.remotePort);
+  console.log('Connection received from ' + conn.ident);
 });
 
 server.on('close', (conn) => {
-  console.log('Lost connection from ' + conn.remoteAddress + ':' + conn.remotePort);
+  console.log('Lost connection from ' + conn.ident);
 });
 
 server.on('piped', (conn, proxy) => {
   console.log(
-    'Established connection for ' + conn.remoteAddress + ':' + conn.remotePort + ' to '
-    + proxy.remoteAddress + ':' + proxy.remotePort
+    'Established connection for ' + conn.ident + ' to ' + proxy.ident
   )
 });
 
 server.on('killed', (conn) => {
-  console.log('Randomly killed connection from ' + conn.remoteAddress + ':' + conn.remotePort);
+  console.log('Randomly killed connection from ' + conn.ident);
 })
 
 server.on('error', (err) => {
